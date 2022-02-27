@@ -20,7 +20,6 @@ class FormatLettersSpec extends AnyFlatSpec with should.Matchers {
         |
         |    A  R  I  N
         |
-        |
         |""".stripMargin
     assertFormttedCorrectly("chelationsesarin", sC)
   }

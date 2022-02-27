@@ -37,7 +37,6 @@ class Game:
                                         |
                                         |    A  R  I  N
                                         |
-                                        |
                                         |""".stripMargin
 
   def isWordInLetters(word: String, letters:String): Boolean =
