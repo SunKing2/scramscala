@@ -29,7 +29,7 @@ class Game:
     bonusLookup.getOrElse(len, 0)
   }
 
-  def formatLetters(letters:String) = """    C  H  E  L
+  def formatLetters(letters:String): String = """    C  H  E  L
                                         |
                                         |    A  T  I  O
                                         |
