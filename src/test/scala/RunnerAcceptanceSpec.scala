@@ -16,7 +16,7 @@ class RunnerAcceptanceSpec extends AnyFlatSpec with should.Matchers {
   }
 
   "Game Runner" should "produce good output" in {
-    val guesses = Seq("eat", "ate", "eats", "seat", "chaste")
+    val guesses = Seq("eat", "ate", "eats", "seat", "chaste", "tea")
     val expected =
       """ Get ready for a round of TSCRAM!
         |
@@ -41,6 +41,7 @@ class RunnerAcceptanceSpec extends AnyFlatSpec with should.Matchers {
         | SCORE:
         |
         |   SunKing2     :  135 (*CHASTE for 15 points!)
+        |
         |""".stripMargin
     assertGuessesProduceOutput(expected, guesses*)
   }

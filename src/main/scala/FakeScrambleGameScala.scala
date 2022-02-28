@@ -1,18 +1,21 @@
 class FakeScrambleGameScala {
-  val startMessage = """ Get ready for a round of TSCRAM!
+  val startMessage: String = """ Get ready for a round of TSCRAM!
                        |
                        | The letters are:
                        |""".stripMargin
   var nGuesses = 0
   var score = 0
-  val letters = "CHELATIONSESARIN".toLowerCase
-  val g = Game()
   var longestWord = ""
+  val letters: String = "CHELATIONSESARIN".toLowerCase
+  var gameIsOn: Boolean = false
+  val g: Game = Game()
+  g.bigDict = urlToList
 
   //https://www.cross-tables.com/download/twl18.txt
-  def urlToList = {
+  def urlToList: Seq[String] = {
     import scala.io.Source
-    val myList = Source.fromURL("https://www.cross-tables.com/download/twl18.txt").getLines().toList.map(_.toLowerCase)
+    val source = Source.fromURL("https://www.cross-tables.com/download/twl18.txt")
+    val myList = source.getLines().toList.map(_.toLowerCase)
     println(s"len is ${myList.length}")
     val cAA = myList.contains("aa")
     print(s"contains aa $cAA")
@@ -21,15 +24,16 @@ class FakeScrambleGameScala {
     val cZymurgy = myList.contains("zymurgy")
     print(s"contains zymurgy $cZymurgy")
     val cZZZ = myList.contains("zz")
-    print(s"contains zzz $cZZZ")
+    println(s"contains zzz $cZZZ")
+    source.close()
     myList
   }
 
   def restartGame(): String = {
-    g.bigDict = urlToList
     nGuesses = 0
     score = 0
     longestWord = ""
+    gameIsOn = true
     startMessage +
       g.formatLetters(letters)
   }
@@ -41,6 +45,12 @@ class FakeScrambleGameScala {
 
   def guess(guess: String): String = {
     var sReturn = ""
+
+    if !gameIsOn then
+      if guess == "rd" || guess == "/go" then
+        return restartGame()
+      return ""  // if game is not on, return (because you don't process guess)
+
     nGuesses += 1
 
     var iAdd = 0
@@ -58,6 +68,7 @@ class FakeScrambleGameScala {
       val longestBonus = g.bonus(longestWord)
       val longestScore = g.scoreWord(longestWord)
       score += longestBonus
+      gameIsOn = false
       sReturn += s"""
                     |
                     |  !! Time's up !!
