@@ -17,6 +17,11 @@ class Game:
   )
   var bigDict = Seq("chelations", "aa", "asset", "hen", "horse")
 
+  val startMessage: String = """ Get ready for a round of TSCRAM!
+                               |
+                               | The letters are:
+                               |""".stripMargin
+
   def scoreWord(word:String): Int = {
     if word == null then return 0
     val len = word.length
@@ -63,4 +68,31 @@ class Game:
     else
       throw new Exception("not in letters")
 
+  //https://www.cross-tables.com/download/twl18.txt
+  def urlToList: Seq[String] = {
+    import scala.io.Source
+    val source = Source.fromURL("https://www.cross-tables.com/download/twl18.txt")
+    val myList = source.getLines().toList.map(_.toLowerCase)
+    println(s"len is ${myList.length}")
+    val cAA = myList.contains("aa")
+    print(s"contains aa $cAA")
+    val cAAH = myList.contains("aah")
+    print(s"contains aah $cAAH")
+    val cZymurgy = myList.contains("zymurgy")
+    print(s"contains zymurgy $cZymurgy")
+    val cZZZ = myList.contains("zz")
+    println(s"contains zzz $cZZZ")
+    source.close()
+    myList
+  }
+
+  def scoreboard(score: Int, longestWord:String, longestScore:Int ): String = {
+    s"""
+       |
+       |  !! Time's up !!
+       |
+       | SCORE:
+       |
+       |   SunKing2     :  $score (*${longestWord.toUpperCase} for $longestScore points!)""".stripMargin
+  }
 
