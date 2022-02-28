@@ -4,14 +4,14 @@ import matchers._
 
 class RunnerAcceptanceSpec extends AnyFlatSpec with should.Matchers {
 
-  private val ctr = FakeScrambleGameScala()
+  private val ctr = ScrambleController()
 
   private def assertGuessesProduceOutput(expected: String, guesses: String*) = {
     var sReturn = ""
 
     sReturn += ctr.restartGame() + "\n"
     for guess <- guesses do
-      sReturn += ctr.guess(guess) + "\n"
+      sReturn += ctr.processUserInput(guess) + "\n"
     sReturn  should be(expected)
   }
 

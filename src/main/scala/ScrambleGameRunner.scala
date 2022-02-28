@@ -1,8 +1,8 @@
 import scala.io.StdIn.readLine
 
-object FakeGameRunner {
+object ScrambleGameRunner {
 
-  private val fsg = FakeScrambleGameScala()
+  private val fsg = ScrambleController()
 
   @main def main(): Unit = {
 
@@ -11,7 +11,7 @@ object FakeGameRunner {
       print("Guess:")
       val word = readLine()
 
-      val sReturn = fsg.guess(word)
+      val sReturn = fsg.processUserInput(word)
       println(sReturn)
   }
 

@@ -1,6 +1,6 @@
 import scala.io.Source.fromFile
 
-class Game:
+class ScrambleHelper:
 
   private val scoreLookup = Map(
     1 -> 1, 2 -> 2, 3 -> 4, 4 -> 6,
@@ -75,7 +75,7 @@ class Game:
     val myList = source.getLines().toList.map(_.toLowerCase)
     println(s"len is ${myList.length}")
     val cAA = myList.contains("aa")
-    print(s"contains aa $cAA")
+    print(s"Version 01 contains aa $cAA")
     val cAAH = myList.contains("aah")
     print(s"contains aah $cAAH")
     val cZymurgy = myList.contains("zymurgy")

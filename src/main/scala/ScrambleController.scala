@@ -1,10 +1,10 @@
-class FakeScrambleGameScala {
+class ScrambleController {
   var nGuesses = 0
   var score = 0
   var longestWord = ""
   val letters: String = "CHELATIONSESARIN".toLowerCase
   var gameIsOn: Boolean = false
-  val g: Game = Game()
+  val g: ScrambleHelper = ScrambleHelper()
   g.bigDict = g.urlToList
 
   def restartGame(): String =
@@ -39,7 +39,7 @@ class FakeScrambleGameScala {
       case e: Throwable => e.getMessage // not in letters // not in dictionary
     }
 
-  def guess(userInput: String): String = {
+  def processUserInput(userInput: String): String = {
     var sReturn = ""
 
     if !gameIsOn then return restartIfTypedRd(userInput)

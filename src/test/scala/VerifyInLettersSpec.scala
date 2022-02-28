@@ -4,7 +4,7 @@ import matchers._
 
 class VerifyInLettersSpec extends AnyFlatSpec with should.Matchers {
 
-  private val game = Game()
+  private val game = ScrambleHelper()
   private val letters = "CHELATIONSESARIN".toLowerCase
 
   private def isInLetters(word: String) =
