@@ -4,7 +4,7 @@ import matchers._
 
 class BonusSpec extends AnyFlatSpec with should.Matchers {
 
-  private val game = ScrambleHelper()
+  private val game = ScrambleHelper
 
   private def assertWordMakesBonus(wordToCheck: String, score: Int) = {
     game.bonus(wordToCheck) should be(score)

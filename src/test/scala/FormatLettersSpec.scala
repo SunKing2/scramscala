@@ -4,7 +4,7 @@ import matchers._
 
 class FormatLettersSpec extends AnyFlatSpec with should.Matchers {
 
-  private val game = ScrambleHelper()
+  private val game = ScrambleHelper
 
   private def assertFormttedCorrectly(letters: String, fmt:String) = {
     game.formatLetters(letters) should be(fmt)

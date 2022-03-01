@@ -1,27 +1,18 @@
-class ScrambleController {
+class GameRun {
+
+  private val g = ScrambleHelper
+
+  // start of state data:
   var nGuesses = 0
   var score = 0
   var longestWord = ""
+  var gameIsOn: Boolean = true
   val letters: String = "CHELATIONSESARIN".toLowerCase
-  var gameIsOn: Boolean = false
-  val g: ScrambleHelper = ScrambleHelper()
-  g.bigDict = g.urlToList
-
-  def restartGame(): String =
-    nGuesses = 0
-    score = 0
-    longestWord = ""
-    gameIsOn = true
-    g.startMessage + g.formatLetters(letters)
+  // end of state data
 
   def checkLongest(word: String): Unit =
     if word.length > longestWord.length then
       longestWord = word
-
-  def restartIfTypedRd(userInput: String): String =
-    if userInput == "rd" || userInput == "/go" then
-      return restartGame()
-    ""  // if game is not on, return (because you don't process guess)
 
   def showScoreboard: String =
     val longestScore = g.scoreWord(longestWord)
@@ -29,26 +20,41 @@ class ScrambleController {
     gameIsOn = false
     g.scoreboard(score, longestWord, longestScore)
 
-  def validateAndScoreWord(word:String):String =
-    var iAdd = 0
-    try
-      iAdd = g.checkAndScore(word, letters, g.bigDict)
-      score += iAdd
-      s"yup, right: $iAdd points!"
-    catch {
-      case e: Throwable => e.getMessage // not in letters // not in dictionary
-    }
+}
+
+class ScrambleController {
+  private val g = ScrambleHelper
+  g.bigDict = g.urlToList
+  private var r:GameRun = GameRun()
+
+
+  def restartGame(): String =
+    r = GameRun()
+    g.startMessage + g.formatLetters(r.letters)
 
   def processUserInput(userInput: String): String = {
     var sReturn = ""
 
-    if !gameIsOn then return restartIfTypedRd(userInput)
+    if !r.gameIsOn then
+      if userInput == "rd" || userInput == "/go" then
+        return restartGame()
+      return ""  // if game is not on, return (because you don't process guess)
 
-    nGuesses += 1
-    sReturn += validateAndScoreWord(userInput)
-    checkLongest(userInput)
+    r.nGuesses += 1
 
-    if nGuesses > 4 then sReturn += showScoreboard
+    var iAdd = 0
+    try
+      iAdd = g.checkAndScore(userInput, r.letters, g.bigDict)
+      r.score += iAdd
+      sReturn += s"yup, right: $iAdd points!"
+    catch {
+      case e: Throwable => sReturn += e.getMessage // not in letters // not in dictionary
+    }
+
+
+    r.checkLongest(userInput)
+
+    if r.nGuesses > 4 then sReturn += r.showScoreboard
 
     sReturn
   }

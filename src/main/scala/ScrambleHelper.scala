@@ -1,6 +1,6 @@
 import scala.io.Source.fromFile
 
-class ScrambleHelper:
+object ScrambleHelper:
 
   private val scoreLookup = Map(
     1 -> 1, 2 -> 2, 3 -> 4, 4 -> 6,

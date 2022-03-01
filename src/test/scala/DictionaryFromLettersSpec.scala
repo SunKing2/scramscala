@@ -4,7 +4,7 @@ import matchers._
 
 class DictionaryFromLettersSpec extends AnyFlatSpec with should.Matchers {
 
-  private val game = ScrambleHelper()
+  private val game = ScrambleHelper
   private val letters:String = "CHELATIONSESARIN".toLowerCase
 
   private val myDictionary = game.dictionaryFromLetters(letters)

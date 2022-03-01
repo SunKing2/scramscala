@@ -4,7 +4,7 @@ import matchers._
 
 class ValidWordSpec extends AnyFlatSpec with should.Matchers {
 
-  private val game = ScrambleHelper()
+  private val game = ScrambleHelper
 
   private val dictionary = Seq("a", "aa", "asset", "chelations")
 
